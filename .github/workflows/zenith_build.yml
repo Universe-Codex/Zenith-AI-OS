@@ -1,0 +1,20 @@
+name: Zenith-AI Synthesis Factory
+on: [push]
+jobs:
+  bake-system:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Architecture Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cython3 clang python3-dev pkg-config
+      - name: Execute Build Pipeline
+        run: |
+          chmod +x build_os.sh
+          ./build_os.sh
+      - name: Archive Weightless Binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: zenith_os_core
+          path: zenith_os_core
